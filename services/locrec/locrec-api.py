@@ -11,14 +11,29 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
+
 import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 
-from .. import rest as REST
+import sys
+sys.path.insert(0,'..')
+
+#from ...services import rest as REST
+#from .rest as REST
+# Parent module '' not loaded, cannot perform relative import
+import rest as REST
+
+from rest import ERROR_404
 
 
+"""
+#import rest as REST
+import ..rest as REST
+from ..location import Location
+from ..location import N2
+"""
 
 API_ENDPOINT_URL = "/v1.0"
 CLIENT_ENDPOINT_URL = "/v1.0"
@@ -40,25 +55,13 @@ def not_found404(exception):
     #log_highlight(str(exception))
     #log_highlight(repr(str(exception)))
     #description='Not found..'
-    #return make_response_jsonified({'error': description}, ERROR_404)
+    return make_response_jsonified({'error': description}, ERROR_404)
+
 
 @app.route(API_ENDPOINT_URL+'/all-local', methods=[REST.GET])
 def invoices_listall():
     return jsonify(images_service.invoices_listall())
 
-from ../location import Location
-from ../location import N2
-
-
-#dbr = [{}, {}]
-#dbr = [[], []]
-dbr = map(lambda x: new list(), range(N2))
-
-def dbarray(loc -> Location):
-    #rxy = region(loc)
-    #dbr[rxy[0]][rxy[1]].append(loc)
-    i = regionhash(loc)
-    return dbr[i]
 
 @app.route(API_ENDPOINT_URL+'/loc/<int:x>/<int:y>', methods=[REST.POST])
 def register_loc(x, y):
@@ -72,14 +75,8 @@ def register_loc(x, y):
     #TODO: loc ORM
     d.append(loc)
 
-import numpy as np
 
-def all_locs_numpy(hash):
-    a = np.toarray(dbr[hash])
-    return a
 
-# never use
-def all_locs_numpy_total(hash):
-    for hash in range(len(dbr)):
-        a = np.toarray(dbr[hash])
-        raise NotImplemented()
+if __name__ == '__main__':
+    #deployment_self_tests()
+    app.run(debug=True, port=9000)

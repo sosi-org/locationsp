@@ -34,3 +34,36 @@ def region_hash(loc -> Location):
 def region_server_no(loc -> Location):
     r01 = region(loc)
     return (r01[0] + r01[1]) % 2
+
+
+
+
+
+
+#from ..location import Location
+#from ..location import N2
+
+
+#dbr = [{}, {}]
+#dbr = [[], []]
+dbr = map(lambda x: new list(), range(N2))
+
+def dbarray(loc -> Location):
+    #rxy = region(loc)
+    #dbr[rxy[0]][rxy[1]].append(loc)
+    i = regionhash(loc)
+    return dbr[i]
+
+
+
+import numpy as np
+
+def all_locs_numpy(hash):
+    a = np.toarray(dbr[hash])
+    return a
+
+# never use
+def all_locs_numpy_total(hash):
+    for hash in range(len(dbr)):
+        a = np.toarray(dbr[hash])
+        raise NotImplemented()
