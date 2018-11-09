@@ -65,6 +65,8 @@ def invoices_listall():
     return jsonify(images_service.invoices_listall())
 
 
+from location import Location as Location
+
 @app.route(API_ENDPOINT_URL+'/loc/<int:x>/<int:y>', methods=[REST.POST, REST.GET])
 def register_loc(x, y):
     # region_server_no

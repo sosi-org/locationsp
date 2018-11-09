@@ -16,12 +16,12 @@ N2 = NCOLS * NROWS
 
 #Region = int  ---> in fact a tuple of 2
 
-def region(loc -> Location):
+def region(loc: Location):
     rx = int(loc.x / REGIONS_WH0)
     ry = int(loc.y / REGIONS_WH1)
     return (rx, ry)
 
-def region_hash(loc -> Location):
+def region_hash(loc: Location):
     rxy = region(loc)
     w = rxy[0] % NCOLS
     h = rxy[1] % NROWS
@@ -31,7 +31,7 @@ def region_hash(loc -> Location):
 
 #def region_server(reg):
 
-def region_server_no(loc -> Location):
+def region_server_no(loc: Location):
     r01 = region(loc)
     return (r01[0] + r01[1]) % 2
 
@@ -46,9 +46,9 @@ def region_server_no(loc -> Location):
 
 #dbr = [{}, {}]
 #dbr = [[], []]
-dbr = map(lambda x: new list(), range(N2))
+dbr = map(lambda x: list(), range(N2))
 
-def dbarray(loc -> Location):
+def dbarray(loc: Location):
     #rxy = region(loc)
     #dbr[rxy[0]][rxy[1]].append(loc)
     i = regionhash(loc)
