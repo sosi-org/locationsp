@@ -27,6 +27,7 @@ import rest as REST
 
 from rest import ERROR_404
 
+from rest import make_response_jsonified
 
 """
 #import rest as REST
@@ -45,7 +46,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # return incorrect_usage_note_response("\"api/\" has nothing to do.", suggested_urls=[CLIENT_ENDPOINT_URL+ "/all-local", CLIENT_ENDPOINT_URL+ "/0/original/"])
-    return make_response_jsonified(r, ERROR_404)
+    print("INDEX")
+    return make_response_jsonified({"error":"errror"}, ERROR_404)
 
 
 @app.errorhandler(ERROR_404)
@@ -54,7 +56,7 @@ def not_found404(exception):
     #log_highlight(str(type(exception)))
     #log_highlight(str(exception))
     #log_highlight(repr(str(exception)))
-    #description='Not found..'
+    description='Not found..'
     return make_response_jsonified({'error': description}, ERROR_404)
 
 
@@ -63,7 +65,7 @@ def invoices_listall():
     return jsonify(images_service.invoices_listall())
 
 
-@app.route(API_ENDPOINT_URL+'/loc/<int:x>/<int:y>', methods=[REST.POST])
+@app.route(API_ENDPOINT_URL+'/loc/<int:x>/<int:y>', methods=[REST.POST, REST.GET])
 def register_loc(x, y):
     # region_server_no
     # db[serverno]
