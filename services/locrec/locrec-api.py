@@ -66,6 +66,7 @@ def invoices_listall():
 
 
 from location import Location as Location
+import locs
 
 @app.route(API_ENDPOINT_URL+'/loc/<int:x>/<int:y>', methods=[REST.POST, REST.GET])
 def register_loc(x, y):
@@ -75,9 +76,11 @@ def register_loc(x, y):
     #rxy = region(x, y)
 
     loc = Location(x,y)
-    d = dbarray(loc)
+    d = locs.dbarray(loc)
     #TODO: loc ORM
     d.append(loc)
+    print(repr(d))
+    return jsonify({'ok': 'ok'})
 
 
 
